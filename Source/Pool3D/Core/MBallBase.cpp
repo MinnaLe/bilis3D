@@ -19,6 +19,13 @@ AMBallBase::AMBallBase()
 	}
 
 	RootComponent = SM_Ball;
+	SM_Ball->SetSimulatePhysics(true);
+	SM_Ball->SetMassOverrideInKg(NAME_None, 0.21);
+	SM_Ball->SetLinearDamping(0.01);
+	SM_Ball->SetAngularDamping(0.5);
+
+
+
 
 }
 
@@ -26,6 +33,8 @@ AMBallBase::AMBallBase()
 void AMBallBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+
 	
 }
 
@@ -34,9 +43,8 @@ void AMBallBase::BeginPlay()
 void AMBallBase::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	SM_Ball->SetSimulatePhysics(true);
-	SM_Ball->SetMassOverrideInKg(NAME_None, 0.21);
 
+	
 }
 
 
