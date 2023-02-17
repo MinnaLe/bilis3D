@@ -19,6 +19,8 @@ AMCamManager::AMCamManager()
 	SpringArmComponent->TargetArmLength = 100;
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
+	CameraPresetRotations = {FRotator(-90, -60, 0),FRotator(-120 ,-60, 0),FRotator(-70, -60, 10),};
+	//CameraPresetRotations = { FRotator(0,-60,-90),FRotator(0,-60,-120),FRotator(10,-60, -70), };
 
 }
 
@@ -28,6 +30,18 @@ void AMCamManager::BeginPlay()
 	Super::BeginPlay();
 	
 }
+
+void AMCamManager::CameraViewUpdate()
+{
+	CurrentCameraRotationIndex =( CurrentCameraRotationIndex + 1)% (CameraPresetRotations.Num());
+	SetActorRotation(CameraPresetRotations[CurrentCameraRotationIndex]);
+	UE_LOG(LogTemp, Warning, TEXT("Choosen index %d"), CurrentCameraRotationIndex);
+}
+
+
+
+
+
 
 // Called every frame
 void AMCamManager::Tick(float DeltaTime)
@@ -40,6 +54,6 @@ void AMCamManager::Tick(float DeltaTime)
 void AMCamManager::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	PlayerInputComponent->BindAction(FName("CameraViewChange"), EInputEvent::IE_Pressed, this, &AMCamManager::CameraViewUpdate);
 }
 

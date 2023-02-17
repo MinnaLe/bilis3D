@@ -22,16 +22,17 @@ public:
 	USpringArmComponent* SpringArmComponent;
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* CameraComponent;
-
+	UPROPERTY(EditAnywhere)
+	TArray<FRotator> CameraPresetRotations;
+	UPROPERTY(BlueprintReadOnly)
+		int CurrentCameraRotationIndex;
 
 public:
 	// Sets default values for this pawn's properties
 	AMCamManager();
-
-	// Called every frame
+	
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
+	void CameraViewUpdate();
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
